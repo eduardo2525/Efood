@@ -20,6 +20,7 @@ export const Section = ({ menu }: Props) => (
             note={item.note}
             assessment={item.assessment}
             title={item.title}
+            to={item.to}
           />
         ))}
       </Listing>

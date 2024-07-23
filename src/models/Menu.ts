@@ -6,9 +6,11 @@ class Menu {
   assessment: string
   title: string
   id: number
+  to: string
 
   constructor(
     id: number,
+    to: string,
     description: string,
     image: string,
     infos: string[],
@@ -17,6 +19,7 @@ class Menu {
     title: string
   ) {
     this.id = id
+    this.to = to
     this.description = description
     this.image = image
     this.infos = infos

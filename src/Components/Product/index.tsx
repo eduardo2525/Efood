@@ -9,6 +9,7 @@ type Props = {
   note: number
   assessment: string
   title: string
+  to: string
 }
 
 const Product: React.FC<Props> = ({
@@ -17,7 +18,8 @@ const Product: React.FC<Props> = ({
   note,
   image,
   assessment,
-  title
+  title,
+  to
 }: Props) => (
   <List>
     <ImgMenu src={image} alt={title} />
@@ -34,7 +36,7 @@ const Product: React.FC<Props> = ({
       </Assessment>
     </div>
     <Paragraph>{description}</Paragraph>
-    <ButtonLink type="link" to="/" title="click aqui">
+    <ButtonLink type="link" to={to} title="click aqui">
       Saiba mais
     </ButtonLink>
   </List>

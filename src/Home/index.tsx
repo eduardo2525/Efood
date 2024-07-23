@@ -7,6 +7,7 @@ import Pizzaria from '../assets/image/restaurante-pizzaria.jpg'
 import Hamburgueria from '../assets/image/hamburgueria.jpg'
 import SaboDoOriente from '../assets/image/restaurante-arabe.jpg'
 import VerdeVida from '../assets/image/rstaurante-vegano.jpg'
+import { Section } from '../Components/Section'
 
 const cardapio: Menu[] = [
   {
@@ -17,7 +18,8 @@ const cardapio: Menu[] = [
     image: HiokiRestaurante,
     infos: ['Destaque da semana', 'Japonesa'],
     note: 4.9,
-    assessment: Page
+    assessment: Page,
+    to: '/Hioki_Sushi'
   },
   {
     id: 2,
@@ -27,7 +29,8 @@ const cardapio: Menu[] = [
     image: DolceVitaTrattoria,
     infos: ['Mais Vendido', 'Italiana'],
     note: 4.6,
-    assessment: Page
+    assessment: Page,
+    to: '/Dolce_Vita'
   },
   {
     id: 3,
@@ -37,7 +40,8 @@ const cardapio: Menu[] = [
     image: Pizzaria,
     infos: ['Pizzaria'],
     note: 4.8,
-    assessment: Page
+    assessment: Page,
+    to: ''
   },
   {
     id: 4,
@@ -47,7 +51,8 @@ const cardapio: Menu[] = [
     image: Hamburgueria,
     infos: ['Melhores Preços', 'Brasileira'],
     note: 4.8,
-    assessment: Page
+    assessment: Page,
+    to: ''
   },
   {
     id: 5,
@@ -57,7 +62,8 @@ const cardapio: Menu[] = [
     image: SaboDoOriente,
     infos: ['Árabe'],
     note: 5,
-    assessment: Page
+    assessment: Page,
+    to: ''
   },
   {
     id: 6,
@@ -67,8 +73,11 @@ const cardapio: Menu[] = [
     image: VerdeVida,
     infos: ['Vegano'],
     note: 4.5,
-    assessment: Page
+    assessment: Page,
+    to: ''
   }
 ]
 
-export default cardapio
+const Home = () => <Section menu={cardapio} />
+
+export default Home

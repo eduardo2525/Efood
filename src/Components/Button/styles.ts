@@ -18,7 +18,7 @@ export const TagButton = styled.button`
 `
 
 export const ButtonLink = styled(Link)`
-  width: 82px;
+  width: 96px;
   height: 24px;
   color: ${Colors.secundary};
   background-color: ${Colors.prymary};
@@ -33,4 +33,9 @@ export const ButtonLink = styled(Link)`
   font-weight: 700;
   line-height: 16px;
   text-decoration: none;
+
+  &:hover {
+    background-color: green;
+    color: white;
+  }
 `

@@ -6,11 +6,13 @@ export const List = styled.li`
   height: 400px;
   border: 1px solid ${Colors.prymary};
   margin-bottom: 48px;
+  border-radius: 8px;
   position: relative;
 `
 export const ImgMenu = styled.img`
   width: 471px;
   height: 217px;
+  border-radius: 8px 8px 0 0;
 `
 export const Infos = styled.div`
   position: absolute;
