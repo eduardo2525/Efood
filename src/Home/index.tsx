@@ -9,7 +9,7 @@ import SaboDoOriente from '../assets/image/restaurante-arabe.jpg'
 import VerdeVida from '../assets/image/rstaurante-vegano.jpg'
 import { Section } from '../Components/Section'
 
-const cardapio: Menu[] = [
+const restaurantes: Menu[] = [
   {
     id: 1,
     title: 'Hioki Sushi',
@@ -78,6 +78,10 @@ const cardapio: Menu[] = [
   }
 ]
 
-const Home = () => <Section menu={cardapio} />
+const Home = () => (
+  <>
+    <Section menu={restaurantes} />
+  </>
+)
 
 export default Home

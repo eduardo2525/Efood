@@ -2,7 +2,8 @@ import { createGlobalStyle } from 'styled-components'
 
 export const Colors = {
   prymary: '#E66767',
-  secundary: '#FFEBD9'
+  secundary: '#FFEBD9',
+  white: '#ffffff'
 }
 
 export const EstiloGlobal = createGlobalStyle`
