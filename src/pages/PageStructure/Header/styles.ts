@@ -1,7 +1,7 @@
 import { styled } from 'styled-components'
-import { Logo } from '../../Components/Logo/styles'
-import { ButtonLink } from '../../Components/Button/styles'
-import { Colors } from '../../EstiloGlobal'
+import { Logo } from '../../../Components/Logo/styles'
+import { ButtonLink } from '../../../Components/Button/styles'
+import { Colors } from '../../../EstiloGlobal'
 
 export const BackgroundPages = styled.header`
   width: 100%;

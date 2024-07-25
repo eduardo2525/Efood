@@ -3,7 +3,7 @@ import Sushi from '../../../assets/image/Sushi.jpg'
 import Ramen from '../../../assets/image/Ramen.jpg'
 import Temaki from '../../../assets/image/Temaki.jpg'
 
-const Cardapio: ProductItem[] = [
+const CardapioHioki: ProductItem[] = [
   {
     id: 1,
     title: 'Sushi',
@@ -27,4 +27,4 @@ const Cardapio: ProductItem[] = [
   }
 ]
 
-export default Cardapio
+export default CardapioHioki

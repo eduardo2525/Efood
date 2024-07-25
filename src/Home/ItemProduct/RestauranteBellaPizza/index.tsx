@@ -3,21 +3,20 @@ import {
   ListProducts,
   Img,
   ItemList,
-  Paragraph,
-  Title
+  Title,
+  Paragraph
 } from '../../../pages/PageStructure/List/styles'
-
-import CardapioHioki from './HiokiProducts'
+import CardapioBella from './BellaProducts'
 
 type Props = {
-  cardapio: typeof CardapioHioki
+  cardapio: typeof CardapioBella
 }
 
-const ItemHioki = ({ cardapio }: Props) => (
+const ItemBella = ({ cardapio }: Props) => (
   <ListProducts>
     {cardapio.map((item) => (
       <ItemList key={item.id}>
-        <Img src={item.image} alt={item.title} />
+        <Img src={item.image} title={item.title} />
         <Title>{item.title}</Title>
         <Paragraph>{item.description}</Paragraph>
         <Button type={'button'} title={'Adicionar'}>
@@ -28,4 +27,4 @@ const ItemHioki = ({ cardapio }: Props) => (
   </ListProducts>
 )
 
-export default ItemHioki
+export default ItemBella

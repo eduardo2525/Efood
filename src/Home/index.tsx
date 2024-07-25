@@ -41,18 +41,18 @@ const restaurantes: Menu[] = [
     infos: ['Pizzaria'],
     note: 4.8,
     assessment: Page,
-    to: ''
+    to: '/Bella_Pizza'
   },
   {
     id: 4,
-    title: 'Big Bite Burgers',
+    title: 'Big Burgers',
     description:
       'Nossos hambúrgueres são preparados artesanalmente por nossos chefs especializados, utilizando carne bovina suculenta e temperada na medida certa, combinada com pães macios e tostados na perfeição.',
     image: Hamburgueria,
-    infos: ['Melhores Preços', 'Brasileira'],
+    infos: ['Melhores Preços', 'Hamburgueria'],
     note: 4.8,
     assessment: Page,
-    to: ''
+    to: '/Big_Burgers'
   },
   {
     id: 5,
@@ -63,7 +63,7 @@ const restaurantes: Menu[] = [
     infos: ['Árabe'],
     note: 5,
     assessment: Page,
-    to: ''
+    to: '/Sabor_do_oriente'
   },
   {
     id: 6,
@@ -74,7 +74,7 @@ const restaurantes: Menu[] = [
     infos: ['Vegano'],
     note: 4.5,
     assessment: Page,
-    to: ''
+    to: '/Verde_Vida'
   }
 ]
 

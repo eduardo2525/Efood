@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 import { Colors } from '../../../EstiloGlobal'
 import { TagButton } from '../../../Components/Button/styles'
 

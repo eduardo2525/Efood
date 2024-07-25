@@ -1,5 +1,5 @@
-import { ButtonLink } from '../../Components/Button/styles'
-import { LogoFood } from '../../Components/Logo'
+import { ButtonLink } from '../../../Components/Button/styles'
+import { LogoFood } from '../../../Components/Logo'
 import { BackgroundPages } from './styles'
 
 type Props = {
