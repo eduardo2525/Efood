@@ -1,10 +1,9 @@
-import Menu from '../../models/Menu'
-
+import { RestaurantesType } from '../../Home'
 import Product from '../Product'
 import { Secao, Listing } from './styles'
 
 type Props = {
-  menu: Menu[]
+  menu: RestaurantesType[]
 }
 
 export const Section = ({ menu }: Props) => (
@@ -14,13 +13,12 @@ export const Section = ({ menu }: Props) => (
         {menu.map((item) => (
           <Product
             key={item.id}
-            description={item.description}
-            image={item.image}
-            infos={item.infos}
-            note={item.note}
-            assessment={item.assessment}
-            title={item.title}
-            to={item.to}
+            description={item.descricao}
+            image={item.capa}
+            infos={item.tipo}
+            note={item.avaliacao}
+            title={item.titulo}
+            to={`${item.id}`}
           />
         ))}
       </Listing>

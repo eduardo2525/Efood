@@ -13,6 +13,7 @@ export const ImgMenu = styled.img`
   width: 471px;
   height: 217px;
   border-radius: 8px 8px 0 0;
+  object-fit: cover;
 `
 export const Infos = styled.div`
   position: absolute;
