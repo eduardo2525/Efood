@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
 import { Section } from '../Components/Section'
+
+import { useGetRestaurantesQuery } from '../Services/api'
 
 export type RestaurantesType = {
   nome: string | undefined
@@ -23,13 +24,7 @@ export type RestaurantesType = {
 }
 
 const Home = () => {
-  const [restaurantes, setRestaurantes] = useState<RestaurantesType[]>()
-
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/efood/restaurantes')
-      .then((res) => res.json())
-      .then((res) => setRestaurantes(res))
-  })
+  const { data: restaurantes, isLoading } = useGetRestaurantesQuery()
 
   if (!restaurantes) {
     return <div>Carregando....</div>

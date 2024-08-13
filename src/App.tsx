@@ -1,15 +1,19 @@
+import { Provider } from 'react-redux'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 import { EstiloGlobal } from './EstiloGlobal'
 import Rotas from './routes'
+import { store } from './Store'
 
 function App() {
   return (
-    <BrowserRouter>
-      <EstiloGlobal />
-      <Rotas />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <EstiloGlobal />
+        <Rotas />
+      </BrowserRouter>
+    </Provider>
   )
 }
 

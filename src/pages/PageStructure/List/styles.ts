@@ -1,5 +1,5 @@
 import { styled } from 'styled-components'
-import { Colors } from '../../../EstiloGlobal'
+import { breakpoints, Colors } from '../../../EstiloGlobal'
 import { TagButton } from '../../../Components/Button/styles'
 
 export const ListProducts = styled.ul`
@@ -7,6 +7,12 @@ export const ListProducts = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 32px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+  }
 `
 export const ItemList = styled.li`
   width: 320px;

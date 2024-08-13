@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Colors } from '../../../EstiloGlobal'
+import { breakpoints, Colors } from '../../EstiloGlobal'
 
 export const Modal = styled.div`
   width: 100vw;
@@ -22,6 +22,10 @@ export const Lists = styled.ul`
   padding: 32px;
   background-color: ${Colors.prymary};
   position: relative;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 90%;
+  }
 `
 
 export const Item = styled.li`
@@ -50,14 +54,26 @@ export const Item = styled.li`
 
     button {
       width: 218px;
-      height: 24px;
+      height: 32px;
       color: ${Colors.prymary};
+      background-color: ${Colors.secundary};
+      border: none;
+      border-radius: 8px;
       font-weight: 700;
       font-size: 14px;
       line-height: 16px;
       position: absolute;
       bottom: 59px;
       cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 240, 0, 0.5);
+        color: white;
+      }
+
+      @media (max-width: ${breakpoints.tablet}) {
+        bottom: 10px;
+      }
     }
   }
 `

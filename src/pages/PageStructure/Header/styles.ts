@@ -28,11 +28,11 @@ export const BackgroundPages = styled.header`
     font-size: 18px;
     line-height: 24px;
   }
-
-  p {
-    color: ${Colors.prymary};
-    font-weight: 900;
-    font-size: 18px;
-    line-height: 24px;
-  }
+`
+export const CartButton = styled.p`
+  color: ${Colors.prymary};
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 24px;
+  cursor: pointer;
 `

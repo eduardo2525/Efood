@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { RestaurantesType } from '../..'
-import Button from '../../../Components/Button'
-import Close from '../../../assets/image/close .png'
+import Button from '../../Components/Button'
+import Close from '../../assets/image/close .png'
 import { Modal, Lists, Item, ImgModal, CloseImg } from './styles'
 import {
   ListProducts,
@@ -11,9 +10,13 @@ import {
   ItemList,
   Title,
   Paragraph
-} from '../../../pages/PageStructure/List/styles'
+} from '../../pages/PageStructure/List/styles'
 
-type CardapioItemType = {
+import { useGetCardapioQuery } from '../../Services/api'
+import { add, open } from '../../Store/Reducers/cart'
+import { useDispatch } from 'react-redux'
+
+export type CardapioItemType = {
   foto: string
   preco: number
   id: number
@@ -24,9 +27,18 @@ type CardapioItemType = {
 
 const ItemCardapio = () => {
   const { id } = useParams<{ id: string }>()
-  const [restaurante, setRestaurante] = useState<RestaurantesType>()
+  const { data: restaurante } = useGetCardapioQuery(id!)
   const [modalEstaAberto, setModalEstaAberto] = useState(false)
   const [itemSelecionado, setItemSelecionado] = useState<CardapioItemType>()
+
+  const dispatch = useDispatch()
+
+  const addCart = () => {
+    if (itemSelecionado) {
+      dispatch(add(itemSelecionado))
+      dispatch(open())
+    }
+  }
 
   const abrirModal = (item: CardapioItemType) => {
     setItemSelecionado(item)
@@ -36,18 +48,6 @@ const ItemCardapio = () => {
   const fechaItem = () => {
     setModalEstaAberto(false)
   }
-
-  useEffect(() => {
-    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.cardapio) {
-          setRestaurante(data)
-        } else {
-          console.error('Dados da API não têm a estrutura esperada:', data)
-        }
-      })
-  }, [id])
 
   if (!restaurante) {
     return <h3>Carregando...</h3>
@@ -94,7 +94,7 @@ const ItemCardapio = () => {
                 <h3>{itemSelecionado.nome}</h3>
                 <p>{itemSelecionado.descricao}</p>
                 <span>{`Serve: de ${itemSelecionado.porcao}`}</span>
-                <button>
+                <button onClick={addCart}>
                   Adicionar ao Carrinho - R$ {itemSelecionado.preco.toFixed(2)}
                 </button>
               </div>

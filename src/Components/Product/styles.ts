@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Colors } from '../../EstiloGlobal'
+import { breakpoints, Colors } from '../../EstiloGlobal'
 
 export const List = styled.li`
   width: 472px;
@@ -8,12 +8,20 @@ export const List = styled.li`
   margin-bottom: 48px;
   border-radius: 8px;
   position: relative;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 100%;
+  }
 `
 export const ImgMenu = styled.img`
   width: 471px;
   height: 217px;
   border-radius: 8px 8px 0 0;
   object-fit: cover;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 100%;
+  }
 `
 export const Infos = styled.div`
   position: absolute;

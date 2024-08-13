@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Colors } from '../../EstiloGlobal'
+import { breakpoints, Colors } from '../../EstiloGlobal'
 
 export const BackgroundFooter = styled.footer`
   width: 100%;
@@ -11,6 +11,10 @@ export const BackgroundFooter = styled.footer`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 100%;
   }
 `
 
@@ -38,4 +42,8 @@ export const Paragraph = styled.p`
   font-size: 10px;
   font-weight: 400;
   line-height: 12px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 100%;
+  }
 `
