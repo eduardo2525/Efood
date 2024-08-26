@@ -1,7 +1,7 @@
 import { styled } from 'styled-components'
 import { Logo } from '../../../Components/Logo/styles'
 import { ButtonLink } from '../../../Components/Button/styles'
-import { Colors } from '../../../EstiloGlobal'
+import { breakpoints, Colors } from '../../../EstiloGlobal'
 
 export const BackgroundPages = styled.header`
   width: 100%;
@@ -35,4 +35,10 @@ export const CartButton = styled.p`
   font-size: 18px;
   line-height: 24px;
   cursor: pointer;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    span {
+      display: none;
+    }
+  }
 `

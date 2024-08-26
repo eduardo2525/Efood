@@ -27,7 +27,7 @@ const HeaderPage = ({ background }: Props) => {
         </ButtonLink>
         <LogoFood />
         <CartButton onClick={openCart}>
-          {items.length} produto(s) no carrinho
+          {items.length} produto(s) <span>no carrinho</span>
         </CartButton>
       </div>
       <Cart />

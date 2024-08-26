@@ -2,6 +2,10 @@ import styled from 'styled-components'
 import { Colors } from '../../EstiloGlobal'
 import { TagButton } from '../Button/styles'
 
+type GroupProps = {
+  $maxWidth?: string
+}
+
 export const Overlay = styled.div`
   position: absolute;
   top: 0;
@@ -64,6 +68,7 @@ export const List = styled.li`
   p {
     margin-top: 8px;
     margin-bottom: 16px;
+    color: ${Colors.prymary};
     font-weight: 900;
     font-size: 18px;
     line-height: 21px;
@@ -88,4 +93,67 @@ export const Img = styled.img`
   width: 80px;
   height: 80px;
   padding: 8px;
+`
+export const Checkout = styled.div`
+  position: fixed;
+  top: 0;
+  color: ${Colors.secundary};
+`
+
+export const Form = styled.form`
+  width: 345px;
+  margin-top: 32px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  display: flex;
+  flex-direction: column;
+
+  > div {
+    display: flex;
+    gap: 34px;
+
+    .this-input {
+      width: 156px;
+    }
+  }
+
+  h3,
+  span {
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  input {
+    margin: 8px 0;
+    width: 344px;
+    height: 32px;
+  }
+`
+
+export const InputGroup = styled.div<GroupProps>`
+  gap: 30px;
+  max-width: ${(props) => props.$maxWidth || 'auto'};
+
+  > input {
+    width: 100%;
+  }
+`
+
+export const FinishTitle = styled.h3`
+  margin-top: 32px;
+  margin-bottom: 16px;
+`
+
+export const Paragraph = styled.p`
+  max-width: 344px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+
+  span {
+    display: block;
+    margin: 12px;
+  }
 `

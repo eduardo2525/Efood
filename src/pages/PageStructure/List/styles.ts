@@ -13,6 +13,10 @@ export const ListProducts = styled.ul`
     grid-template-columns: repeat(2, 1fr);
     justify-items: center;
   }
+
+  @media (max-width: ${breakpoints.mobale}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `
 export const ItemList = styled.li`
   width: 320px;
