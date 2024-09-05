@@ -1,7 +1,7 @@
-import { BackgroundBanner, Titulo } from './styles'
-
 import { LogoFood } from '../Logo/index'
 import Background from '../../assets/image/background.png'
+
+import { BackgroundBanner, Titulo } from './styles'
 
 const Header = () => (
   <BackgroundBanner style={{ backgroundImage: `url(${Background})` }}>

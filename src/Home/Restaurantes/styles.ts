@@ -26,11 +26,19 @@ export const Lists = styled.ul`
   @media (max-width: ${breakpoints.tablet}) {
     width: 90%;
   }
+
+  @media (max-width: ${breakpoints.mobale}) {
+    height: auto;
+  }
 `
 
 export const Item = styled.li`
   display: flex;
   color: ${Colors.white};
+
+  @media (max-width: ${breakpoints.mobale}) {
+    flex-direction: column;
+  }
 
   div {
     display: flex;
@@ -72,7 +80,8 @@ export const Item = styled.li`
       }
 
       @media (max-width: ${breakpoints.tablet}) {
-        bottom: 10px;
+        position: static;
+        margin-top: 10px;
       }
     }
   }
@@ -83,6 +92,10 @@ export const ImgModal = styled.img`
   height: 280px;
   object-fit: cover;
   margin-right: 24px;
+
+  @media (max-width: ${breakpoints.mobale}) {
+    width: 100%;
+  }
 `
 export const CloseImg = styled.img`
   width: 16px;

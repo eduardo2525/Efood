@@ -1,7 +1,8 @@
-import { ButtonLink } from '../Button/styles'
 import Tag from '../Tag'
 import Page from '../../assets/image/Page.png'
+
 import { List, ImgMenu, Infos, Title, Assessment, Paragraph } from './styles'
+import { ButtonLink } from '../Button/styles'
 
 type Props = {
   description: string

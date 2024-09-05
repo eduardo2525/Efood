@@ -1,16 +1,11 @@
+import Button from '../../Components/Button'
+import Close from '../../assets/image/close .png'
+
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import Button from '../../Components/Button'
-import Close from '../../assets/image/close .png'
 import { Modal, Lists, Item, ImgModal, CloseImg } from './styles'
-import {
-  ListProducts,
-  Img,
-  ItemList,
-  Title,
-  Paragraph
-} from '../../pages/PageStructure/List/styles'
+import * as S from '../../pages/PageStructure/List/styles'
 
 import { useGetCardapioQuery } from '../../Services/api'
 import { add, open } from '../../Store/Reducers/cart'
@@ -38,6 +33,7 @@ const ItemCardapio = () => {
       dispatch(add(itemSelecionado))
       dispatch(open())
     }
+    fechaItem()
   }
 
   const abrirModal = (item: CardapioItemType) => {
@@ -64,12 +60,12 @@ const ItemCardapio = () => {
 
   return (
     <>
-      <ListProducts>
+      <S.ListProducts>
         {cardapio.map((item) => (
-          <ItemList key={item.id}>
-            <Img src={item.foto} title={item.nome} />
-            <Title>{item.nome}</Title>
-            <Paragraph>{getParagraph(item.descricao)}</Paragraph>
+          <S.ItemList key={item.id}>
+            <S.Img src={item.foto} title={item.nome} />
+            <S.Title>{item.nome}</S.Title>
+            <S.Paragraph>{getParagraph(item.descricao)}</S.Paragraph>
             <Button
               type="button"
               title="Adicionar"
@@ -77,9 +73,9 @@ const ItemCardapio = () => {
             >
               Adicionar ao carrinho
             </Button>
-          </ItemList>
+          </S.ItemList>
         ))}
-      </ListProducts>
+      </S.ListProducts>
       {itemSelecionado && (
         <Modal className={modalEstaAberto ? 'visivel' : ''} onClick={fechaItem}>
           <Lists onClick={(e) => e.stopPropagation()}>

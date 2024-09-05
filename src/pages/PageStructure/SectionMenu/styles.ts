@@ -9,4 +9,8 @@ export const SectionMenu = styled.section`
   @media (max-width: ${breakpoints.tablet}) {
     width: 100%;
   }
+
+  @media (min-width: ${breakpoints.tablet}) and (max-width: ${breakpoints.desktop}) {
+    width: 100%;
+  }
 `

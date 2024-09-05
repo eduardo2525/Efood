@@ -1,5 +1,5 @@
-import { RestaurantesType } from '../../Home'
 import Product from '../Product'
+
 import { Secao, Listing } from './styles'
 
 type Props = {

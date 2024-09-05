@@ -17,6 +17,15 @@ export const ListProducts = styled.ul`
   @media (max-width: ${breakpoints.mobale}) {
     grid-template-columns: repeat(1, 1fr);
   }
+
+  @media (min-width: ${breakpoints.mobale}) and (max-width: ${breakpoints.tablet}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: ${breakpoints.tablet}) and (max-width: ${breakpoints.desktop}) {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+  }
 `
 export const ItemList = styled.li`
   width: 320px;

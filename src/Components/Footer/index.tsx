@@ -1,9 +1,9 @@
-import { BackgroundFooter, SocialMedia, Paragraph } from './styles'
-
 import { LogoFood } from '../Logo'
 import Instagrm from '../../assets/image/Group.svg'
 import Facebook from '../../assets/image/Vector (2).svg'
 import Twitter from '../../assets/image/Vector.svg'
+
+import { BackgroundFooter, SocialMedia, Paragraph } from './styles'
 
 const Footer = () => (
   <BackgroundFooter>

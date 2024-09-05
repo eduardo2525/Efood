@@ -1,25 +1,32 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../Store'
-import {
-  Overlay,
-  CartContainer,
-  Sidebar,
-  List,
-  Img,
-  Checkout,
-  Form,
-  InputGroup,
-  FinishTitle,
-  Paragraph
-} from './styles'
-import Bin from '../../assets/image/lixeira-de-reciclagem 1.jpg'
-import { TagButton } from '../Button/styles'
-import { close, remove } from '../../Store/Reducers/cart'
-import Button from '../Button'
+
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+
+import Bin from '../../assets/image/lixeira-de-reciclagem 1.jpg'
+import { TagButton } from '../Button/styles'
+import { close, remove, clearCart } from '../../Store/Reducers/cart'
+import Button from '../Button'
+
 import { usePurchaseMutation } from '../../Services/api'
+
+import * as S from './styles'
+
+interface FormValues {
+  nameOwner: string
+  address: string
+  city: string
+  cepOwner: string
+  numberOwner: string
+  complement: string
+  cardName: string
+  cardNumber: string
+  cvvCard: string
+  monthMaturity: string
+  yearMaturity: string
+}
 
 const Cart = () => {
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
@@ -27,10 +34,9 @@ const Cart = () => {
   const [step, setStep] = useState<'cart' | 'userData' | 'payment' | 'finish'>(
     'cart'
   )
-  const [purchase, { isLoading, isError, data, isSuccess }] =
-    usePurchaseMutation()
+  const [purchase, { data, isLoading }] = usePurchaseMutation()
 
-  const form = useFormik({
+  const form = useFormik<FormValues>({
     initialValues: {
       nameOwner: '',
       address: '',
@@ -42,46 +48,43 @@ const Cart = () => {
       cardNumber: '',
       cvvCard: '',
       monthMaturity: '',
-      yaerMaturity: ''
+      yearMaturity: ''
     },
     validationSchema: Yup.object({
       nameOwner: Yup.string()
         .min(5, 'O nome precisa ter pelo menos 5 caracteres')
-        .required('O Campo é obrigatorio'),
+        .required('O Campo é obrigatório'),
       address: Yup.string()
-        .min(5, 'O nome precisa ter pelo menos 5 caracteres')
-        .required('O Campo é obrigatorio'),
+        .min(5, 'O endereço precisa ter pelo menos 5 caracteres')
+        .required('O Campo é obrigatório'),
       city: Yup.string()
-        .min(5, 'O nome precisa ter pelo menos 5 caracteres')
-        .required('O Campo é obrigatorio'),
+        .min(5, 'A cidade precisa ter pelo menos 5 caracteres')
+        .required('O Campo é obrigatório'),
       cepOwner: Yup.string()
-        .min(8, 'O campo precisa ter 8 caracteres')
-        .max(8, 'O campo precisa ter 8 caracteres')
-        .required('O Campo é obrigatorio'),
+        .length(8, 'O CEP precisa ter 8 caracteres')
+        .required('O Campo é obrigatório'),
       numberOwner: Yup.string()
-        .min(2, 'O nome precisa ter pelo menos 2 caracteres')
-        .required('O Campo é obrigatorio'),
-      complement: Yup.string()
-        .min(10, 'O nome precisa ter pelo menos 10 caracteres')
-        .required('O Campo é obrigatorio'),
+        .min(2, 'O número precisa ter pelo menos 2 caracteres')
+        .required('O Campo é obrigatório'),
+      complement: Yup.string().min(
+        10,
+        'O complemento precisa ter pelo menos 10 caracteres'
+      ),
       cardName: Yup.string()
-        .min(5, 'O nome precisa ter pelo menos 5 caracteres')
-        .required('O Campo é obrigatorio'),
+        .min(5, 'O nome no cartão precisa ter pelo menos 5 caracteres')
+        .required('O Campo é obrigatório'),
       cardNumber: Yup.string()
-        .min(5, 'O nome precisa ter pelo menos 5 caracteres')
-        .required('O Campo é obrigatorio'),
+        .min(5, 'O número do cartão precisa ter pelo menos 5 caracteres')
+        .required('O Campo é obrigatório'),
       cvvCard: Yup.string()
-        .min(3, 'O nome precisa ter pelo menos 3 caracteres')
-        .max(3, 'O nome precisa ter pelo menos 3 caracteres')
-        .required('O Campo é obrigatorio'),
+        .length(3, 'O CVV precisa ter 3 caracteres')
+        .required('O Campo é obrigatório'),
       monthMaturity: Yup.string()
-        .min(4, 'O nome precisa ter pelo menos 4 caracteres')
-        .max(4, 'O nome precisa ter pelo menos 4 caracteres')
-        .required('O Campo é obrigatorio'),
-      yaerMaturity: Yup.string()
-        .min(4, 'O nome precisa ter pelo menos 4 caracteres')
-        .max(4, 'O nome precisa ter pelo menos 4 caracteres')
-        .required('O Campo é obrigatorio')
+        .length(2, 'O mês de vencimento precisa ter 2 caracteres')
+        .required('O Campo é obrigatório'),
+      yearMaturity: Yup.string()
+        .length(4, 'O ano de vencimento precisa ter 4 caracteres')
+        .required('O Campo é obrigatório')
     }),
     onSubmit: (values) => {
       purchase({
@@ -102,17 +105,23 @@ const Cart = () => {
             code: Number(values.cvvCard),
             expires: {
               month: Number(values.monthMaturity),
-              year: Number(values.yaerMaturity)
+              year: Number(values.yearMaturity)
             }
           }
         },
-        products: [
-          {
-            id: 1,
-            price: 10
-          }
-        ]
+        products: items.map((item) => ({
+          id: item.id,
+          price: item.preco
+        }))
       })
+        .then(({ data }) => {
+          if (data && data.orderId) {
+            setStep('finish')
+          }
+        })
+        .catch((error) => {
+          console.error('Erro na requisição:', error)
+        })
     }
   })
 
@@ -125,29 +134,30 @@ const Cart = () => {
   }
 
   const getTotalPrice = () => {
-    return items.reduce((acumulador, valorAtual) => {
-      return (acumulador += valorAtual.preco)
-    }, 0)
+    return items.reduce(
+      (accumulatio, currrentItem) => accumulatio + currrentItem.preco,
+      0
+    )
   }
 
-  const getErroMessage = (fieldName: string, message?: string) => {
-    const isTouched = fieldName in form.touched
-    const isInvalid = fieldName in form.errors
+  const checkInputHasError = (fieldName: keyof FormValues) => {
+    const isTouched = form.touched[fieldName]
+    const isInvalid = form.errors[fieldName]
+    const hasError = isTouched && isInvalid
 
-    if (isTouched && isInvalid) return message
-    return ''
+    return hasError
   }
 
   return (
-    <CartContainer className={isOpen ? 'is-open' : ''}>
-      <Overlay onClick={closeCart} />
-      <Sidebar>
-        {step == 'cart' && (
+    <S.CartContainer className={isOpen ? 'is-open' : ''}>
+      <S.Overlay onClick={closeCart} />
+      <S.Sidebar>
+        {step === 'cart' && (
           <>
             <ul>
               {items.map((item) => (
-                <List key={item.id}>
-                  <Img src={item.foto} alt={item.nome} />
+                <S.List key={item.id}>
+                  <S.Img src={item.foto} alt={item.nome} />
                   <div className="description">
                     <p>{item.nome}</p>
                     <span>{item.preco.toFixed(2)}</span>
@@ -158,7 +168,7 @@ const Cart = () => {
                       alt="lixeira de excluir"
                     />
                   </div>
-                </List>
+                </S.List>
               ))}
             </ul>
             <p className="prices">
@@ -167,15 +177,15 @@ const Cart = () => {
             <TagButton
               onClick={() => setStep('userData')}
               type={'button'}
-              title={'entrga'}
+              title={'Entrega'}
             >
               Continuar com a entrega
             </TagButton>
           </>
         )}
-        {step == 'userData' && (
-          <Checkout>
-            <Form onSubmit={form.handleSubmit}>
+        {step === 'userData' && (
+          <S.Checkout>
+            <S.Form onSubmit={form.handleSubmit}>
               <h3>Entrega</h3>
               <label htmlFor="nameOwner">Quem irá receber</label>
               <input
@@ -185,10 +195,8 @@ const Cart = () => {
                 value={form.values.nameOwner}
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
+                className={checkInputHasError('nameOwner') ? 'error' : ''}
               />
-              <small>
-                {getErroMessage('nameOwner', form.errors.nameOwner)}
-              </small>
               <label htmlFor="address">Endereço</label>
               <input
                 type="text"
@@ -197,8 +205,8 @@ const Cart = () => {
                 value={form.values.address}
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
+                className={checkInputHasError('address') ? 'error' : ''}
               />
-              <small>{getErroMessage('address', form.errors.nameOwner)}</small>
               <label htmlFor="city">Cidade</label>
               <input
                 type="text"
@@ -207,38 +215,38 @@ const Cart = () => {
                 value={form.values.city}
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
+                className={checkInputHasError('city') ? 'error' : ''}
               />
-              <small>{getErroMessage('city', form.errors.nameOwner)}</small>
               <div>
                 <div>
-                  <label htmlFor="cepOwner">Cep</label>
-                  <input
-                    className="this-input"
-                    type="text"
-                    id="cepOwner"
-                    name="cepOwner"
-                    value={form.values.cepOwner}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                  />
-                  <small>
-                    {getErroMessage('cepOwner', form.errors.nameOwner)}
-                  </small>
+                  <S.InputGroup $maxWidth="156px">
+                    <label htmlFor="cepOwner">CEP</label>
+                    <input
+                      type="text"
+                      id="cepOwner"
+                      name="cepOwner"
+                      value={form.values.cepOwner}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={checkInputHasError('cepOwner') ? 'error' : ''}
+                    />
+                  </S.InputGroup>
                 </div>
                 <div>
-                  <label htmlFor="numberOwner">Número</label>
-                  <input
-                    className="this-input"
-                    type="text"
-                    id="numberOwner"
-                    name="numberOwner"
-                    value={form.values.numberOwner}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                  />
-                  <small>
-                    {getErroMessage('numberOwner', form.errors.nameOwner)}
-                  </small>
+                  <S.InputGroup $maxWidth="156px">
+                    <label htmlFor="numberOwner">Número</label>
+                    <input
+                      type="text"
+                      id="numberOwner"
+                      name="numberOwner"
+                      value={form.values.numberOwner}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={
+                        checkInputHasError('numberOwner') ? 'error' : ''
+                      }
+                    />
+                  </S.InputGroup>
                 </div>
               </div>
               <label htmlFor="complement">Complemento (opcional)</label>
@@ -249,49 +257,45 @@ const Cart = () => {
                 value={form.values.complement}
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
+                className={checkInputHasError('complement') ? 'error' : ''}
               />
-              <small>
-                {getErroMessage('complement', form.errors.nameOwner)}
-              </small>
               <Button
-                onClick={() => {
-                  form.submitForm()
+                type={'button'}
+                title={'Continuar com pagamento'}
+                onClick={async () => {
+                  await form.submitForm()
+
                   setStep('payment')
                 }}
-                type={'button'}
-                title={'continuar com o pagamento'}
               >
-                Continuar com o pagamento
+                Continuar com pagamento
               </Button>
               <Button
-                onClick={() => setStep('cart')}
                 type={'button'}
-                title={'volta para o carrinho'}
+                title={'Voltar ao carrinho'}
+                onClick={() => setStep('cart')}
               >
-                Voltar para o carrinho
+                Voltar ao carrinho
               </Button>
-            </Form>
-          </Checkout>
+            </S.Form>
+          </S.Checkout>
         )}
-        {step == 'payment' && (
-          <Checkout>
-            <Form onSubmit={form.handleSubmit}>
-              <span>
-                Pagamento - Valor a pagar R$ {getTotalPrice().toFixed(2)}
-              </span>
+        {step === 'payment' && (
+          <S.Checkout>
+            <S.Form onSubmit={form.handleSubmit}>
+              <h3>Pagamento</h3>
               <label htmlFor="cardName">Nome no cartão</label>
               <input
                 type="text"
-                className="this-input"
                 id="cardName"
                 name="cardName"
                 value={form.values.cardName}
                 onChange={form.handleChange}
                 onBlur={form.handleBlur}
+                className={checkInputHasError('cardName') ? 'error' : ''}
               />
-              <small>{getErroMessage('cardName', form.errors.nameOwner)}</small>
               <div>
-                <InputGroup $maxWidth="228px">
+                <S.InputGroup $maxWidth="228px">
                   <label htmlFor="cardNumber">Número do cartão</label>
                   <input
                     type="text"
@@ -300,12 +304,10 @@ const Cart = () => {
                     value={form.values.cardNumber}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    className={checkInputHasError('cardNumber') ? 'error' : ''}
                   />
-                  <small>
-                    {getErroMessage('cardNumber', form.errors.nameOwner)}
-                  </small>
-                </InputGroup>
-                <InputGroup $maxWidth="87px">
+                </S.InputGroup>
+                <S.InputGroup $maxWidth="87px">
                   <label htmlFor="cvvCard">CVV</label>
                   <input
                     type="text"
@@ -314,14 +316,12 @@ const Cart = () => {
                     value={form.values.cvvCard}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    className={checkInputHasError('cvvCard') ? 'error' : ''}
                   />
-                  <small>
-                    {getErroMessage('cvvCard', form.errors.nameOwner)}
-                  </small>
-                </InputGroup>
+                </S.InputGroup>
               </div>
               <div>
-                <InputGroup $maxWidth="155px">
+                <S.InputGroup $maxWidth="155px">
                   <label htmlFor="monthMaturity">Mês de vencimento</label>
                   <input
                     type="text"
@@ -330,35 +330,32 @@ const Cart = () => {
                     value={form.values.monthMaturity}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    className={
+                      checkInputHasError('monthMaturity') ? 'error' : ''
+                    }
                   />
-                  <small>
-                    {getErroMessage('monthMaturity', form.errors.nameOwner)}
-                  </small>
-                </InputGroup>
-                <InputGroup $maxWidth="155px">
-                  <label htmlFor="yaerMaturity">Ano de vencimento</label>
+                </S.InputGroup>
+                <S.InputGroup $maxWidth="155px">
+                  <label htmlFor="yearMaturity">Ano de vencimento</label>
                   <input
                     type="text"
-                    id="yaerMaturity"
-                    name="yaerMaturity"
-                    value={form.values.yaerMaturity}
+                    id="yearMaturity"
+                    name="yearMaturity"
+                    value={form.values.yearMaturity}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    className={
+                      checkInputHasError('yearMaturity') ? 'error' : ''
+                    }
                   />
-                  <small>
-                    {getErroMessage('yaerMaturity', form.errors.nameOwner)}
-                  </small>
-                </InputGroup>
+                </S.InputGroup>
               </div>
               <Button
-                type={'button'}
+                type={'submit'}
                 title={'Finalizar pagamento'}
-                onClick={() => {
-                  form.submitForm()
-                  setStep('finish')
-                }}
+                disabled={isLoading}
               >
-                Finalizar pagamento
+                {isLoading ? 'Finalizando Pagamento' : 'Finalizar'}
               </Button>
               <Button
                 type={'button'}
@@ -367,13 +364,13 @@ const Cart = () => {
               >
                 Voltar para a edição de endereço
               </Button>
-            </Form>
-          </Checkout>
+            </S.Form>
+          </S.Checkout>
         )}
-        {step == 'finish' && (
-          <Checkout>
-            <FinishTitle>Pedido realizado - </FinishTitle>
-            <Paragraph>
+        {step === 'finish' && data && data.orderId && (
+          <S.Checkout>
+            <S.FinishTitle>Pedido realizado - {data.orderId} </S.FinishTitle>
+            <S.Paragraph>
               Estamos felizes em informar que seu pedido já está em processo de
               preparação e, em breve, será entregue no endereço fornecido.
               <span />
@@ -386,14 +383,21 @@ const Cart = () => {
               <span />
               Esperamos que desfrute de uma deliciosa e agradável experiência
               gastronômica. Bom apetite!
-            </Paragraph>
-            <Button type={'button'} title={'Concluir'}>
+            </S.Paragraph>
+            <Button
+              type={'button'}
+              title={'Concluir'}
+              onClick={() => {
+                dispatch(clearCart())
+                closeCart()
+              }}
+            >
               Concluir
             </Button>
-          </Checkout>
+          </S.Checkout>
         )}
-      </Sidebar>
-    </CartContainer>
+      </S.Sidebar>
+    </S.CartContainer>
   )
 }
 

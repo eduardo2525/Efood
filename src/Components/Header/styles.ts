@@ -17,6 +17,10 @@ export const BackgroundBanner = styled.header`
   @media (max-width: ${breakpoints.tablet}) {
     width: 100%;
   }
+
+  @media (max-width: ${breakpoints.mobale}) {
+    height: 90%;
+  }
 `
 export const Titulo = styled.h1`
   width: 539px;
@@ -33,5 +37,10 @@ export const Titulo = styled.h1`
     max-width: 80%;
     font-size: 32px;
     margin: 30px;
+  }
+
+  @media (max-width: ${breakpoints.mobale}) {
+    height: auto;
+    font-size: 24px;
   }
 `

@@ -20,10 +20,15 @@ export const Listing = styled.ul`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 80px;
+  row-gap: 24px;
 
   @media (max-width: ${breakpoints.tablet}) {
     max-width: 100%;
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  @media (min-width: ${breakpoints.tablet}) and (max-width: ${breakpoints.desktop}) {
+    width: 100%;
   }
 `

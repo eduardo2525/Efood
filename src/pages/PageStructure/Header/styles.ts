@@ -17,6 +17,13 @@ export const BackgroundPages = styled.header`
 
   ${Logo} {
     margin-top: 0px;
+
+    @media (max-width: ${breakpoints.mobale}) {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 
   ${ButtonLink} {
@@ -30,6 +37,8 @@ export const BackgroundPages = styled.header`
   }
 `
 export const CartButton = styled.p`
+  position: relative;
+  top: 10px;
   color: ${Colors.prymary};
   font-weight: 900;
   font-size: 18px;

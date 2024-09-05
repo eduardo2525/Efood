@@ -12,6 +12,15 @@ export const List = styled.li`
   @media (max-width: ${breakpoints.tablet}) {
     width: 100%;
   }
+
+  @media (max-width: ${breakpoints.mobale}) {
+    height: 100%;
+  }
+
+  @media (min-width: ${breakpoints.tablet}) and (max-width: ${breakpoints.desktop}) {
+    width: 100%;
+    height: 100%;
+  }
 `
 export const ImgMenu = styled.img`
   width: 471px;
@@ -20,6 +29,10 @@ export const ImgMenu = styled.img`
   object-fit: cover;
 
   @media (max-width: ${breakpoints.tablet}) {
+    width: 100%;
+  }
+
+  @media (min-width: ${breakpoints.tablet}) and (max-width: ${breakpoints.desktop}) {
     width: 100%;
   }
 `

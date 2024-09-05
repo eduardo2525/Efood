@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Colors } from '../../EstiloGlobal'
+import { breakpoints, Colors } from '../../EstiloGlobal'
 import { TagButton } from '../Button/styles'
 
 type GroupProps = {
@@ -55,6 +55,10 @@ export const Sidebar = styled.aside`
     color: ${Colors.prymary};
     background-color: ${Colors.secundary};
   }
+
+  @media (max-width: ${breakpoints.mobale}) {
+    width: 90%;
+  }
 `
 
 export const List = styled.li`
@@ -87,6 +91,10 @@ export const List = styled.li`
     bottom: 8px;
     cursor: pointer;
   }
+
+  @media (max-width: ${breakpoints.mobale}) {
+    width: 100%;
+  }
 `
 
 export const Img = styled.img`
@@ -112,10 +120,6 @@ export const Form = styled.form`
   > div {
     display: flex;
     gap: 34px;
-
-    .this-input {
-      width: 156px;
-    }
   }
 
   h3,
@@ -129,6 +133,18 @@ export const Form = styled.form`
     margin: 8px 0;
     width: 344px;
     height: 32px;
+
+    &.error {
+      color: red;
+    }
+
+    @media (max-width: ${breakpoints.mobale}) {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: ${breakpoints.mobale}) {
+    width: 95%;
   }
 `
 
@@ -155,5 +171,9 @@ export const Paragraph = styled.p`
   span {
     display: block;
     margin: 12px;
+  }
+
+  @media (max-width: ${breakpoints.mobale}) {
+    width: 95%;
   }
 `
